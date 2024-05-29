@@ -87,3 +87,6 @@ RUN pip install --no-deps \
     itsdangerous==2.1.2 \
     importlib_metadata==2.1.2 \
     zipp==3.17.0
+
+# Add the data
+ADD work_dirs/ .
