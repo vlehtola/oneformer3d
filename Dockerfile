@@ -88,5 +88,7 @@ RUN pip install --no-deps \
     importlib_metadata==2.1.2 \
     zipp==3.17.0
 
+# Add pythonpath
+ENV PYTHONPATH "${PYTHONPATH}:/workspace/oneformer3d/"
 # Add the data
-ADD work_dirs/ .
+#ADD configs/  data/  LICENSE  oneformer3d/  README.md  tools/  work_dirs/
