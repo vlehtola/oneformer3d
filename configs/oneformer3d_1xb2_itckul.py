@@ -175,7 +175,7 @@ metric_meta = dict(
     label2cat=label2cat,
     ignore_index=[num_semantic_classes],
     classes=class_names,
-    dataset_name='S3DIS')
+    dataset_name='itckul')
 sem_mapping = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
 
 val_evaluator = dict(
