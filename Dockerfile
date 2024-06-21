@@ -10,7 +10,8 @@ RUN pip install --no-deps \
     mmengine==0.7.3 \
     mmdet==3.0.0 \
     mmsegmentation==1.0.0 \
-    git+https://github.com/open-mmlab/mmdetection3d.git@22aaa47fdb53ce1870ff92cb7e3f96ae38d17f61
+    git+https://github.com/vlehtola/mmdetection3d.git@itckul_oneformer3d
+
 RUN pip install mmcv==2.0.0 -f https://download.openmmlab.com/mmcv/dist/cu116/torch1.13.0/index.html --no-deps
 
 # Install MinkowskiEngine
