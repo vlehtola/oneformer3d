@@ -42,7 +42,7 @@ model = dict(
         num_semantic_classes=num_semantic_classes,
         sem_criterion=dict(
             type='ITCKULSemanticCriterion',
-            ignore_index=num_semantic_classes, # change this later! TODO, ++VL
+            ignore_index=num_semantic_classes,
             loss_weight=5.0),
         inst_criterion=dict(
             type='InstanceCriterion',
@@ -157,8 +157,6 @@ train_dataloader = dict(
         ann_file='itckul_oneformer3d_infos_train.pkl',
         data_prefix=data_prefix,
         pipeline=train_pipeline,
-        ignore_index=num_semantic_classes,
-        scene_idxs=None,
         test_mode=False))
 val_dataloader = dict(
     dataset=dict(
@@ -167,7 +165,6 @@ val_dataloader = dict(
         ann_file='itckul_oneformer3d_infos_val.pkl',
         data_prefix=data_prefix,
         pipeline=test_pipeline,
-        ignore_index=num_semantic_classes,
         test_mode=True))
 test_dataloader = val_dataloader
 
@@ -209,7 +206,7 @@ default_hooks = dict(
         save_best=['all_ap_50%', 'miou'],
         rule='greater'))
 
-load_from = 'work_dirs/tmp/instance-only-oneformer3d_1xb2_scannet-and-structured3d.pth'
+#load_from = 'work_dirs/tmp/instance-only-oneformer3d_1xb2_scannet-and-structured3d.pth'
 
 train_cfg = dict(type='EpochBasedTrainLoop', max_epochs=512, val_interval=16)
 val_cfg = dict(type='ValLoop')
