@@ -146,31 +146,35 @@ test_pipeline = [
                 color_mean=[127.5, 127.5, 127.5])]),
     dict(type='Pack3DDetInputs_', keys=['points'])
 ]
+class_names = [
+    'ceiling', 'floor', 'wall', 'beam', 'column', 'window', 'door',
+    'table', 'chair', 'sofa', 'bookcase', 'board', 'clutter', 'stair', 'unlabeled']
 
 # run settings
 train_dataloader = dict(
     batch_size=4,
     num_workers=6,
+    sampler=dict(type='DefaultSampler', shuffle=True),
     dataset=dict(
         type=dataset_type,
+        metainfo=dict(classes=class_names), # I HAD TO ADD THIS LINE
         data_root=data_root,
-        ann_file='itckul_oneformer3d_infos_train.pkl',
+        ann_file='itckul_infos_train.pkl',
         data_prefix=data_prefix,
         pipeline=train_pipeline,
         test_mode=False))
 val_dataloader = dict(
+    sampler=dict(type='DefaultSampler', shuffle=False),
     dataset=dict(
         type=dataset_type,
         data_root=data_root,
-        ann_file='itckul_oneformer3d_infos_val.pkl',
+        ann_file='itckul_infos_val.pkl',
         data_prefix=data_prefix,
         pipeline=test_pipeline,
         test_mode=True))
 test_dataloader = val_dataloader
 
-class_names = [
-    'ceiling', 'floor', 'wall', 'beam', 'column', 'window', 'door',
-    'table', 'chair', 'sofa', 'bookcase', 'board', 'clutter', 'stair', 'unlabeled']
+
 label2cat = {i: name for i, name in enumerate(class_names)}
 metric_meta = dict(
     label2cat=label2cat,
