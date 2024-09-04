@@ -74,7 +74,7 @@ model = dict(
         thing_cls=[7, 8, 9, 10, 11]))
 
 # dataset settings
-dataset_type = 'ITCKULSegDataset'
+dataset_type = 'ITCKULSegDataset_'
 data_root = 'data/itckul/'
 data_prefix = dict(
     pts='points',
