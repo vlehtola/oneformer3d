@@ -4,9 +4,7 @@ from mmdet3d.datasets.itckul_dataset import ITCKULDataset
 
 @DATASETS.register_module()
 class ITCKULSegDataset_(ITCKULDataset):
-
-
-METAINFO = {
+    METAINFO = {
     'classes': ('ceiling', 'floor', 'wall', 'beam', 'column', 'window', 'door',
                 'table', 'chair', 'sofa', 'bookcase', 'board', 'clutter', 'stair', 'unlabeled'),
     'palette': [[0, 255, 0], [0, 0, 255], [0, 255, 255], [255, 255, 0],
