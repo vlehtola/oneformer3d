@@ -54,10 +54,12 @@ class ITCKULSemanticCriterion:
 
     def __init__(self,
                  loss_weight,
+                 ignore_index=None,
                  seg_loss=dict(
                      type='mmdet.CrossEntropyLoss', use_sigmoid=True)):
         self.seg_loss = MODELS.build(seg_loss)
         self.loss_weight = loss_weight
+        self.ignore_index = ignore_index 
 
     def get_layer_loss(self, layer, aux_outputs, insts):
         """Calculate loss at intermediate level.
@@ -126,13 +128,11 @@ class S3DISSemanticCriterion:
     """
 
     def __init__(self,
-                 ignore_index,
                  loss_weight,
                  seg_loss=dict(
                      type='mmdet.CrossEntropyLoss', use_sigmoid=True)):
         self.seg_loss = MODELS.build(seg_loss)
         self.loss_weight = loss_weight
-        self.ignore_index = ignore_index
 
     def get_layer_loss(self, layer, aux_outputs, insts):
         """Calculate loss at intermediate level.
