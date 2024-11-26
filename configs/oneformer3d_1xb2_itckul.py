@@ -70,7 +70,7 @@ model = dict(
         nms=True,
         matrix_nms_kernel='linear',
         num_sem_cls=num_semantic_classes,
-        stuff_cls=[0, 1, 2, 3, 4, 5, 6, 12, 13],
+        stuff_cls=[0, 1, 2, 3, 4, 5, 6, 12, 13, 14],
         thing_cls=[7, 8, 9, 10, 11]))
 
 # dataset settings
@@ -185,7 +185,7 @@ sem_mapping = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
 
 val_evaluator = dict(
     type='UnifiedSegMetric',
-    stuff_class_inds=[0, 1, 2, 3, 4, 5, 6, 12, 13],
+    stuff_class_inds=[0, 1, 2, 3, 4, 5, 6, 12, 13, 14],
     thing_class_inds=[7, 8, 9, 10, 11],
     min_num_points=1,
     id_offset=2**16,
