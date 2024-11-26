@@ -10,7 +10,7 @@ num_semantic_classes = 15
 
 model = dict(
     type='ITCKULOneFormer3D',
-    data_preprocessor=dict(type='Det3DDataPreprocessor'),
+    data_preprocessor=dict(type='Det3DDataPreprocessor'), 
     in_channels=6,
     num_channels=num_channels,
     voxel_size=0.05,
@@ -18,19 +18,19 @@ model = dict(
     min_spatial_shape=128,
     backbone=dict(
         type='SpConvUNet',
-        num_planes=[num_channels * (i + 1) for i in range(5)],
+        num_planes=[num_channels * (i + 1) for i in range(4)],
         return_blocks=True),
     decoder=dict(
         type='QueryDecoder',
-        num_layers=3,
+        num_layers=2,
         num_classes=num_instance_classes,
-        num_instance_queries=400,
+        num_instance_queries=100,  # reduced from 400
         num_semantic_queries=num_semantic_classes,
         num_instance_classes=num_instance_classes,
         in_channels=num_channels,
-        d_model=256,
-        num_heads=8,
-        hidden_dim=1024,
+        d_model=128,
+        num_heads=4,
+        hidden_dim=512,
         dropout=0.0,
         activation_fn='gelu',
         iter_pred=True,
@@ -60,7 +60,7 @@ model = dict(
             fix_mean_loss=True)),
     train_cfg=dict(),
     test_cfg=dict(
-        topk_insts=450,
+        topk_insts=300,
         inst_score_thr=0.0,
         pan_score_thr=0.4,
         npoint_thr=300,
@@ -70,7 +70,7 @@ model = dict(
         nms=True,
         matrix_nms_kernel='linear',
         num_sem_cls=num_semantic_classes,
-        stuff_cls=[0, 1, 2, 3, 4, 5, 6, 12],
+        stuff_cls=[0, 1, 2, 3, 4, 5, 6, 12, 13],
         thing_cls=[7, 8, 9, 10, 11]))
 
 # dataset settings
@@ -97,7 +97,7 @@ train_pipeline = [
         with_seg_3d=True),
     dict(
         type='PointSample_',
-        num_points=180000),
+        num_points=100000), # Reduced number of points from 180000
     dict(type='PointInstClassMapping_',
         num_classes=num_instance_classes),
     dict(
@@ -152,7 +152,7 @@ class_names = [
 
 # run settings
 train_dataloader = dict(
-    batch_size=4,
+    batch_size=1, # reduced from 4
     num_workers=6,
     sampler=dict(type='DefaultSampler', shuffle=True),
     dataset=dict(
@@ -199,7 +199,12 @@ test_evaluator = val_evaluator
 optim_wrapper = dict(
     type='OptimWrapper',
     optimizer=dict(type='AdamW', lr=0.0001, weight_decay=0.05),
-    clip_grad=dict(max_norm=10, norm_type=2))
+    clip_grad=dict(max_norm=10, norm_type=2)
+    )
+
+# Enable mixed precision training
+fp16 = dict(loss_scale='dynamic')
+
 param_scheduler = dict(type='PolyLR', begin=0, end=512, power=0.9)
 
 custom_hooks = [dict(type='EmptyCacheHook', after_iter=True)]
